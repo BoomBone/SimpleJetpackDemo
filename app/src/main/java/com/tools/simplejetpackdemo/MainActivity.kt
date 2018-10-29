@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         mainViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
-
+        binding.mainViewModel = mainViewModel
+        binding.setLifecycleOwner(this)
     }
 }
