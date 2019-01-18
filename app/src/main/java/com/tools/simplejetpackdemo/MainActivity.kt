@@ -13,10 +13,12 @@ import com.tools.simplejetpackdemo.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainViewModel: MainActivityViewModel
+    private var girlsAdapter: GirlsAdapter? = null
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         mainViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
         binding.mainViewModel = mainViewModel
         binding.setLifecycleOwner(this)
@@ -24,12 +26,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun subscribeToModel() {
-        mainViewModel.getLiveObservableData().observe(this,Observer<Result<GirlData, FuelError>>{
-            t->
+        mainViewModel.getLiveObservableData().observe(this, Observer<Result<GirlData, FuelError>> { t ->
             t.fold({
-                Log.e("main","data=${it.results}")
-            },{
-                Log.e("main","error=${it.message}")
+                Log.e("main", "data=${it.results}")
+                girlsAdapter = GirlsAdapter(it.results)
+                binding.adapter = girlsAdapter
+
+            }, {
+                Log.e("main", "error=${it.message}")
             })
         })
     }
