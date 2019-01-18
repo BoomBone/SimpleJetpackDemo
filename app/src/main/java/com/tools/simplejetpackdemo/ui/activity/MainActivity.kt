@@ -1,4 +1,4 @@
-package com.tools.simplejetpackdemo
+package com.tools.simplejetpackdemo.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,7 +8,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.result.Result
+import com.tools.simplejetpackdemo.R
+import com.tools.simplejetpackdemo.adapter.GirlsAdapter
+import com.tools.simplejetpackdemo.data.GirlData
 import com.tools.simplejetpackdemo.databinding.ActivityMainBinding
+import com.tools.simplejetpackdemo.viewmodel.MainActivityViewModel
 
 class MainActivity : AppCompatActivity() {
 

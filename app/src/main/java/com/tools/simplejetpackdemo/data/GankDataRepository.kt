@@ -1,10 +1,11 @@
-package com.tools.simplejetpackdemo
+package com.tools.simplejetpackdemo.data
 
 import androidx.lifecycle.LiveData
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.livedata.liveDataObject
 import com.github.kittinunf.result.Result
+import com.tools.simplejetpackdemo.data.GirlData
 
 
 object GankDataRepository {
