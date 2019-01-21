@@ -9,7 +9,7 @@ import com.tools.simplejetpackdemo.data.GirlData
 
 class MainActivityViewModel : ViewModel() {
     fun getLiveObservableData(): LiveData<Result<GirlData, FuelError>> {
-        return GankDataRepository.getLiveObservableData("20", "1")
+        return GankDataRepository.getLiveObservableData(20, 1)
     }
 
 }

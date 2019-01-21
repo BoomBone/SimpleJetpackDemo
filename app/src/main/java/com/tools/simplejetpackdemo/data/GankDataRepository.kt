@@ -9,7 +9,7 @@ import com.tools.simplejetpackdemo.data.GirlData
 
 
 object GankDataRepository {
-    fun getLiveObservableData(size: String, index: String): LiveData<Result<GirlData, FuelError>> {
+    fun getLiveObservableData(size: Int, index: Int): LiveData<Result<GirlData, FuelError>> {
         val url = "https://gank.io/api/data/福利/$size/$index"
         return Fuel.get(url).liveDataObject(GirlData.Deserializer())
     }

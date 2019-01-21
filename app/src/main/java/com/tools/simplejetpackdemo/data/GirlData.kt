@@ -16,6 +16,14 @@ data class GirlData(
 }
 
 
+class ListingResponse(val data: ListingData)
+
+class ListingData(
+        val children: List<Result>,
+        val after: String?,
+        val before: String?
+)
+
 data class Result(
         val _id: String,
         val createdAt: String,
