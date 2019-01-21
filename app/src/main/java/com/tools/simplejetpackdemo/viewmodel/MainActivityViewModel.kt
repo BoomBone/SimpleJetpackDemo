@@ -8,7 +8,6 @@ import com.tools.simplejetpackdemo.data.GankDataRepository
 import com.tools.simplejetpackdemo.data.GirlData
 
 class MainActivityViewModel : ViewModel() {
-    val user = User("Jack", 12)
     fun getLiveObservableData(): LiveData<Result<GirlData, FuelError>> {
         return GankDataRepository.getLiveObservableData("20", "1")
     }

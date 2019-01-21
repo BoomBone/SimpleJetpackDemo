@@ -5,9 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.tools.simplejetpackdemo.GlideApp
 import com.tools.simplejetpackdemo.R
 import com.tools.simplejetpackdemo.data.Result
+import com.tools.simplejetpackdemo.utils.glide.GlideApp
 
 internal class GirlsAdapter(val list: List<Result>) : RecyclerView.Adapter<GirlsHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GirlsHolder {
