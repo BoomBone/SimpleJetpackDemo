@@ -1,7 +1,11 @@
-package com.tools.simplejetpackdemo.data.repository
+package com.tools.simplejetpackdemo.data.repository.byPage
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
+import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.core.FuelError
+import com.github.kittinunf.fuel.livedata.liveDataObject
 import com.tools.simplejetpackdemo.data.GankDataRepository
 import com.tools.simplejetpackdemo.data.GirlData
 import com.tools.simplejetpackdemo.data.NetworkState
@@ -35,7 +39,7 @@ class PageKeyedGirlsDataSource(private val retryExecutor: Executor) : PageKeyedD
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Result>) {
         networkState.postValue(NetworkState.LOADING)
         initialLoad.postValue(NetworkState.LOADING)
-        GankDataRepository.getLiveObservableData(params.requestedLoadSize, 1)
+        getLiveObservableData(params.requestedLoadSize, 1)
                 .observeForever { it ->
                     it.fold({ data ->
                         retry = null
@@ -55,7 +59,7 @@ class PageKeyedGirlsDataSource(private val retryExecutor: Executor) : PageKeyedD
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Result>) {
         networkState.postValue(NetworkState.LOADING)
-        GankDataRepository.getLiveObservableData(params.requestedLoadSize, params.key)
+        getLiveObservableData(params.requestedLoadSize, params.key)
                 .observeForever { it ->
                     it.fold({ data ->
                         retry = null
@@ -73,6 +77,11 @@ class PageKeyedGirlsDataSource(private val retryExecutor: Executor) : PageKeyedD
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Result>) {
         // ignored, since we only ever append to our initial load
+    }
+
+    fun getLiveObservableData(size: Int, index: Int): LiveData<com.github.kittinunf.result.Result<GirlData, FuelError>> {
+        val url = "https://gank.io/api/data/福利/$size/$index"
+        return Fuel.get(url).liveDataObject(GirlData.Deserializer())
     }
 
 }
