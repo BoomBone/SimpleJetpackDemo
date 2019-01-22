@@ -2,6 +2,7 @@ package com.tools.simplejetpackdemo.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
+import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelError
@@ -24,7 +25,7 @@ class GankDataRepository constructor(private val networkExecutor: Executor) {
         }
 
         return Listing(pagedList = livePagedList,
-                networkState = Transformations.switchMap(sourceFactory.sourceLiveData){
+                networkState = Transformations.switchMap(sourceFactory.sourceLiveData) {
                     it.networkState
                 },
                 retry = {
@@ -34,8 +35,6 @@ class GankDataRepository constructor(private val networkExecutor: Executor) {
                     sourceFactory.sourceLiveData.value?.invalidate()
                 },
                 refreshState = refreshState
-                )
+        )
     }
-
-
 }

@@ -10,13 +10,14 @@ import com.tools.simplejetpackdemo.R
 import com.tools.simplejetpackdemo.adapter.GirlsAdapter
 import com.tools.simplejetpackdemo.data.GankDataRepository
 import com.tools.simplejetpackdemo.databinding.ActivityMainBinding
+import com.tools.simplejetpackdemo.ui.adapter.PostsAdapter
+import com.tools.simplejetpackdemo.utils.glide.GlideApp
 import com.tools.simplejetpackdemo.viewmodel.MainActivityViewModel
 import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainViewModel: MainActivityViewModel
-    private var girlsAdapter: GirlsAdapter? = null
     private lateinit var binding: ActivityMainBinding
     private val NETWORK_IO = Executors.newFixedThreadPool(5)
 
@@ -34,5 +35,15 @@ class MainActivity : AppCompatActivity() {
         }).get(MainActivityViewModel::class.java)
         binding.mainViewModel = mainViewModel
         binding.setLifecycleOwner(this)
+        initAdapter()
+    }
+
+    private fun initAdapter() {
+        val glide = GlideApp.with(this)
+        val adapter = PostsAdapter(glide)
+        binding.adapter = adapter
+        mainViewModel.posts.observeForever {
+            adapter.submitList(it)
+        }
     }
 }
