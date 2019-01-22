@@ -5,5 +5,11 @@ import com.tools.simplejetpackdemo.data.GankDataRepository
 
 class MainActivityViewModel(private var gankDataRepository: GankDataRepository) : ViewModel() {
 
-    val posts = gankDataRepository.postsOfGirl(30).pagedList
+    private val repoResult = gankDataRepository.postsOfGirl(30)
+    val posts = repoResult.pagedList
+    val refreshState = repoResult.refreshState
+
+    fun refresh() {
+        repoResult.refresh.invoke()
+    }
 }

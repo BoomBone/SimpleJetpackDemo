@@ -3,16 +3,19 @@ package com.tools.simplejetpackdemo.ui.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.tools.simplejetpackdemo.R
 import com.tools.simplejetpackdemo.adapter.GirlsAdapter
 import com.tools.simplejetpackdemo.data.GankDataRepository
+import com.tools.simplejetpackdemo.data.NetworkState
 import com.tools.simplejetpackdemo.databinding.ActivityMainBinding
 import com.tools.simplejetpackdemo.ui.adapter.PostsAdapter
 import com.tools.simplejetpackdemo.utils.glide.GlideApp
 import com.tools.simplejetpackdemo.viewmodel.MainActivityViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
@@ -36,6 +39,17 @@ class MainActivity : AppCompatActivity() {
         binding.mainViewModel = mainViewModel
         binding.setLifecycleOwner(this)
         initAdapter()
+        initSwipeToRefresh()
+    }
+
+    private fun initSwipeToRefresh() {
+        mainViewModel.refreshState.observe(this, Observer {
+            mMainSrl.isRefreshing = it == NetworkState.LOADING
+        })
+
+        mMainSrl.setOnRefreshListener {
+            mainViewModel.refresh()
+        }
     }
 
     private fun initAdapter() {
